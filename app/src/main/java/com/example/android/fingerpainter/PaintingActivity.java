@@ -37,6 +37,8 @@ public class PaintingActivity extends AppCompatActivity {
         brushSize = myFingerPainterView.getBrushWidth();
         brushColour = myFingerPainterView.getColour();
 
+        //myFingerPainterView.load(intent.getData());
+
     }
 
     @Override
