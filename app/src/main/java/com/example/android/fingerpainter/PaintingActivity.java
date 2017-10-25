@@ -15,22 +15,25 @@ public class PaintingActivity extends AppCompatActivity {
     static final int ACTIVITY_COLOUR_REQUEST_CODE = 2;
     protected int brushColour;
     protected int brushSize;
+    protected int brushShape;
     protected int redValue;
     protected int greenValue;
     protected int blueValue;
-    FingerPainterView myFingerPainterView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_painting);
 
-        myFingerPainterView = new FingerPainterView(this);
         LinearLayout paintingView = (LinearLayout) findViewById(R.id.paintingLayout);
+
+        FingerPainterView myFingerPainterView = new FingerPainterView(this);
+        myFingerPainterView.setId(R.id.myFingerPainterViewId);
         paintingView.addView(myFingerPainterView);
 
-        brushSize = myFingerPainterView.getBrushWidth();
-        brushColour = myFingerPainterView.getColour();
+
+       brushSize = myFingerPainterView.getBrushWidth();
+       brushColour = myFingerPainterView.getColour();
 
     }
 
@@ -57,45 +60,89 @@ public class PaintingActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
-        outState.putInt("brushSize",brushSize);
-        outState.putInt("brushColour",brushColour);
+
+        FingerPainterView myFingerPainterView = (FingerPainterView) findViewById(R.id.myFingerPainterViewId);
+
+        //save outgoing variables
+        brushSize = myFingerPainterView.getBrushWidth();
+        brushColour = myFingerPainterView.getColour();
+        outState.putInt("brushSize", brushSize);
+        outState.putInt("brushColour", brushColour);
+        outState.putInt("brushShape", brushShape);
+        outState.putInt("redValue", redValue);
+        outState.putInt("greenValue", greenValue);
+        outState.putInt("blueValue", blueValue);
 
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
+
+        FingerPainterView myFingerPainterView = (FingerPainterView) findViewById(R.id.myFingerPainterViewId);
+
+        //retrieve saved variables
         this.brushSize = savedInstanceState.getInt("brushSize");
         this.brushColour = savedInstanceState.getInt("brushColour");
+        this.brushShape = savedInstanceState.getInt("brushShape");
+        this.redValue = savedInstanceState.getInt("redValue");
+        this.greenValue = savedInstanceState.getInt("greenValue");
+        this.blueValue = savedInstanceState.getInt("blueValue");
+
+        // set brushshape, colour and size
+        if (brushShape == 0) { // square nib
+            myFingerPainterView.setBrush(Paint.Cap.SQUARE);
+        } else if (brushShape == 1) { // round nib
+            myFingerPainterView.setBrush(Paint.Cap.ROUND);
+        }
+        myFingerPainterView.setBrushWidth(brushSize);
+        myFingerPainterView.setColour(brushColour);
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        FingerPainterView myFingerPainterView = (FingerPainterView) findViewById(R.id.myFingerPainterViewId);
+
+        // check if activity has returned from colour or size
         if (requestCode == ACTIVITY_COLOUR_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bundle bundle = data.getExtras();
-                redValue = bundle.getInt("returningRed");
-                greenValue = bundle.getInt("returningGreen");
-                blueValue = bundle.getInt("returningBlue");
 
+                //retrieve colours
+                int returningRed = bundle.getInt("returningRed");
+                int returningGreen = bundle.getInt("returningGreen");
+                int returningBlue = bundle.getInt("returningBlue");
+
+                //set global values
+                redValue = returningRed;
+                greenValue = returningGreen;
+                blueValue = returningBlue;
                 brushColour = argb(255, redValue, greenValue, blueValue);
+
+                // set brush colour
                 myFingerPainterView.setColour(brushColour);
             }
         } else if (requestCode == ACTIVITY_SIZE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bundle bundle = data.getExtras();
                 //retrieve size and shape
-                brushSize = bundle.getInt("returningSize");
+                int returningSize = bundle.getInt("returningSize");
                 int returningShape = bundle.getInt("returningShape");
 
+                //set global values
+                brushSize = returningSize;
+                brushShape = returningShape;
+
                 //set brush size
-                // brushSize = returningSize;
                 myFingerPainterView.setBrushWidth(brushSize);
 
+
                 // set brush shape
-                if (returningShape == 0) { // square nib
+                if (brushShape == 0) { // square nib
                     myFingerPainterView.setBrush(Paint.Cap.SQUARE);
-                } else if (returningShape == 1) { // round nib
+                } else if (brushShape == 1) { // round nib
                     myFingerPainterView.setBrush(Paint.Cap.ROUND);
                 }
             }
@@ -104,12 +151,13 @@ public class PaintingActivity extends AppCompatActivity {
 
 
     protected void onColourClicked(View v){
+        // bundle outgoing colours
         Bundle colourOut = new Bundle();
         colourOut.putInt("outgoingRed", redValue);
         colourOut.putInt("outgoingGreen", greenValue);
         colourOut.putInt("outgoingBlue", blueValue);
 
-
+        //start new colour intent
         Intent intentColourActivity = new Intent(PaintingActivity.this, ColourActivity.class);
         intentColourActivity.putExtras(colourOut);
         startActivityForResult(intentColourActivity, ACTIVITY_COLOUR_REQUEST_CODE);
@@ -120,14 +168,12 @@ public class PaintingActivity extends AppCompatActivity {
 
     }
 
-    protected void onLoadClicked(View v){
-
-    }
-
     protected void onSizeClicked(View v){
+        // bundle outgoing size
         Bundle sizeOut = new Bundle();
         sizeOut.putInt("outgoingSize", brushSize);
 
+        // start new size intent
         Intent intentSizeActivity = new Intent(PaintingActivity.this, SizeActivity.class);
         intentSizeActivity.putExtras(sizeOut);
         startActivityForResult(intentSizeActivity, ACTIVITY_SIZE_REQUEST_CODE);
