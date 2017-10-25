@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.fingerpainter.ColourActivity">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/redText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Red"
+            android:textSize="18sp" />
+
+        <SeekBar
+            android:id="@+id/redBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.08"
+            android:max="255" />
+
+        <TextView
+            android:id="@+id/greenText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Green"
+            android:textSize="18sp" />
+
+        <SeekBar
+            android:id="@+id/greenBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:max="255" />
+
+        <TextView
+            android:id="@+id/blueText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Blue"
+            android:textSize="18sp" />
+
+        <SeekBar
+            android:id="@+id/blueBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.08"
+            android:max="255" />
+
+        <Button
+            android:id="@+id/returnButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onReturnClicked"
+            android:text="Return" />
+
+        <TextView
+            android:id="@+id/colourSample"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sample Colour"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
