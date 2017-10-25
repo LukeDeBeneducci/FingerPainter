@@ -25,13 +25,15 @@ public class PaintingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_painting);
 
+        //find the paintingview linear layout
         LinearLayout paintingView = (LinearLayout) findViewById(R.id.paintingLayout);
 
+        // create the fingerpainterview programatically
         FingerPainterView myFingerPainterView = new FingerPainterView(this);
         myFingerPainterView.setId(R.id.myFingerPainterViewId);
         paintingView.addView(myFingerPainterView);
 
-
+        //set brush size and colour
         brushSize = myFingerPainterView.getBrushWidth();
         brushColour = myFingerPainterView.getColour();
 
@@ -61,6 +63,7 @@ public class PaintingActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
 
+        //find fingerpainterview via its ID
         FingerPainterView myFingerPainterView = (FingerPainterView) findViewById(R.id.myFingerPainterViewId);
 
         //save outgoing variables
@@ -79,6 +82,7 @@ public class PaintingActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
 
+        //find fingerpainterview via its ID
         FingerPainterView myFingerPainterView = (FingerPainterView) findViewById(R.id.myFingerPainterViewId);
 
         //retrieve saved variables
@@ -89,7 +93,7 @@ public class PaintingActivity extends AppCompatActivity {
         this.greenValue = savedInstanceState.getInt("greenValue");
         this.blueValue = savedInstanceState.getInt("blueValue");
 
-        // set brushshape, colour and size
+        // set brushshape, colour, and size
         if (brushShape == 0) { // square nib
             myFingerPainterView.setBrush(Paint.Cap.SQUARE);
         } else if (brushShape == 1) { // round nib
@@ -103,6 +107,7 @@ public class PaintingActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        //find fingerpainterview via its ID
         FingerPainterView myFingerPainterView = (FingerPainterView) findViewById(R.id.myFingerPainterViewId);
 
         // check if activity has returned from colour or size
@@ -137,7 +142,6 @@ public class PaintingActivity extends AppCompatActivity {
 
                 //set brush size
                 myFingerPainterView.setBrushWidth(brushSize);
-
 
                 // set brush shape
                 if (brushShape == 0) { // square nib

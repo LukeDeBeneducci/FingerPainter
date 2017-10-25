@@ -17,7 +17,7 @@ public class SizeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_size);
 
-        // extract the previous size
+        // extract the previous size from incoming bundle
         Bundle incomingBundle = getIntent().getExtras();
         returnSize = incomingBundle.getInt("outgoingSize");
 
@@ -25,10 +25,11 @@ public class SizeActivity extends AppCompatActivity {
         SeekBar sizeBar = (SeekBar) findViewById(R.id.sizeBar);
         sizeBar.setProgress(returnSize);
 
-        // check the seek bar for changes in size
+        // check the seek bar for changes in size in order to set new size
         sizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+                //returning size value = value of progress bar
                 returnSize = progress;
             }
 
@@ -42,13 +43,7 @@ public class SizeActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
-
-
-
-
 
     @Override
     protected void onPause(){
@@ -96,11 +91,12 @@ public class SizeActivity extends AppCompatActivity {
         sizeBundle.putInt("returningSize", returnSize);
         sizeBundle.putInt("returningShape", returnShape);
 
-        // start retuning Intent
+        // start returning Intent
         Intent sizeResult = new Intent();
         sizeResult.putExtras(sizeBundle);
         setResult(Activity.RESULT_OK, sizeResult);
 
+        // finish this activity
         finish();
     }
 }

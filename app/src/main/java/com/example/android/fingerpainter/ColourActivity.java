@@ -40,17 +40,20 @@ public class ColourActivity extends AppCompatActivity {
         SeekBar blueBar = (SeekBar) findViewById(R.id.blueBar);
         blueBar.setProgress(returnBlue);
 
-        // set the sample text to the incoming values
+        // set the sample text colour to the incoming values
         final TextView sampleColour = (TextView) findViewById(R.id.colourSample);
         int rgbBrushColour = argb(255, returnRed, returnGreen, returnBlue);
         sampleColour.setTextColor(rgbBrushColour);
 
-        // check redbar for changes and uptate text.
+        // check redbar for changes, update text colour, and update returning red colour variable.
         redBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+                //returning green value = value of progress bar
                 returnRed = progress;
+                // combine red, green, blue, and alpha for a single colour integer
                 int rgbBrushColour = argb(255, returnRed, returnGreen, returnBlue);
+                // set the sample colour to the combined colour value
                 sampleColour.setTextColor(rgbBrushColour);
             }
 
@@ -63,12 +66,15 @@ public class ColourActivity extends AppCompatActivity {
             }
         });
 
-        // check greenbar for changes and uptate text.
+        // check greenbar for changes, update text colour, and update returning green colour variable.
         greenBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+                //returning green value = value of progress bar
                 returnGreen = progress;
+                // combine red, green, blue, and alpha for a single colour integer
                 int rgbBrushColour = argb(255, returnRed, returnGreen, returnBlue);
+                // set the sample colour to the combined colour value
                 sampleColour.setTextColor(rgbBrushColour);
             }
 
@@ -81,12 +87,15 @@ public class ColourActivity extends AppCompatActivity {
             }
         });
 
-        // check bluebar for changes and uptate text.
+        // check bluebar for changes, update text, and update returing blue colour variable.
         blueBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+                //returning blue value = value of progress bar
                 returnBlue = progress;
+                // combine red, green, blue, and alpha for a single colour integer
                 int rgbBrushColour = argb(255, returnRed, returnGreen, returnBlue);
+                // set the sample colour to the combined colour value
                 sampleColour.setTextColor(rgbBrushColour);
             }
 
@@ -121,16 +130,18 @@ public class ColourActivity extends AppCompatActivity {
     }
 
     public void onReturnClicked(View v){
+        //bundle the returning colour values
         Bundle colourBundle = new Bundle();
         colourBundle.putInt("returningRed", returnRed);
         colourBundle.putInt("returningGreen", returnGreen);
         colourBundle.putInt("returningBlue", returnBlue);
 
-
+        //start an intent with the colour bundle to return to the main painting activity
         Intent colourResult = new Intent();
         colourResult.putExtras(colourBundle);
         setResult(Activity.RESULT_OK, colourResult);
 
+        //finish this activity
         finish();
     }
 }
