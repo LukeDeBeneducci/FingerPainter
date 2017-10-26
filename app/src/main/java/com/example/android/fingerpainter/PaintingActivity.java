@@ -39,6 +39,8 @@ public class PaintingActivity extends AppCompatActivity {
         //set brush size and colour
         brushSize = myFingerPainterView.getBrushWidth();
         brushColour = myFingerPainterView.getColour();
+
+        //intercept implicit intents to open fingerpainter app
         myFingerPainterView.load(getIntent().getData());
 
     }
