@@ -2,11 +2,13 @@ package com.example.android.fingerpainter;
 
 import android.content.Intent;
 import android.graphics.Paint;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import static android.graphics.Color.argb;
+import static com.example.android.fingerpainter.R.layout.activity_painting;
 
 
 public class PaintingActivity extends AppCompatActivity {
@@ -23,7 +25,7 @@ public class PaintingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_painting);
+        setContentView(activity_painting);
 
         //find the paintingview linear layout
         LinearLayout paintingView = (LinearLayout) findViewById(R.id.paintingLayout);
@@ -32,6 +34,7 @@ public class PaintingActivity extends AppCompatActivity {
         FingerPainterView myFingerPainterView = new FingerPainterView(this);
         myFingerPainterView.setId(R.id.myFingerPainterViewId);
         paintingView.addView(myFingerPainterView);
+
 
         //set brush size and colour
         brushSize = myFingerPainterView.getBrushWidth();
