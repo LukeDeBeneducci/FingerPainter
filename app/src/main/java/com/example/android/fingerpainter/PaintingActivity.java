@@ -172,9 +172,6 @@ public class PaintingActivity extends AppCompatActivity {
 
     }
 
-    protected void onSaveClicked(View v){
-
-    }
 
     protected void onSizeClicked(View v){
         // bundle outgoing size
