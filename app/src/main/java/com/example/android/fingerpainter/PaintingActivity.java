@@ -2,11 +2,12 @@ package com.example.android.fingerpainter;
 
 import android.content.Intent;
 import android.graphics.Paint;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.view.View;
 import android.widget.LinearLayout;
+
 import static android.graphics.Color.argb;
 import static com.example.android.fingerpainter.R.layout.activity_painting;
 
@@ -40,7 +41,7 @@ public class PaintingActivity extends AppCompatActivity {
         brushSize = myFingerPainterView.getBrushWidth();
         brushColour = myFingerPainterView.getColour();
 
-        //intercept implicit intents to open fingerpainter app
+        // intercept the implicit intent to open fingerpainter app
         myFingerPainterView.load(getIntent().getData());
 
     }
@@ -173,6 +174,7 @@ public class PaintingActivity extends AppCompatActivity {
         startActivityForResult(intentColourActivity, ACTIVITY_COLOUR_REQUEST_CODE);
 
     }
+
 
 
     protected void onSizeClicked(View v){
