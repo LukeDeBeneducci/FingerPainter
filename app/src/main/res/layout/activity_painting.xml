@@ -32,6 +32,14 @@
             android:text="Colour" />
 
         <Button
+            android:id="@+id/loadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onLoadClicked"
+            android:text="load" />
+
+        <Button
             android:id="@+id/sizeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

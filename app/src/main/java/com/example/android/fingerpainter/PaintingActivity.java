@@ -16,6 +16,7 @@ public class PaintingActivity extends AppCompatActivity {
 
     static final int ACTIVITY_SIZE_REQUEST_CODE = 1;
     static final int ACTIVITY_COLOUR_REQUEST_CODE = 2;
+    static final int ACTIVITY_LOAD_REQUEST_CODE = 3;
     protected int brushColour;
     protected int brushSize;
     protected int brushShape;
@@ -117,7 +118,7 @@ public class PaintingActivity extends AppCompatActivity {
         //find fingerpainterview via its ID
         FingerPainterView myFingerPainterView = (FingerPainterView) findViewById(R.id.myFingerPainterViewId);
 
-        // check if activity has returned from colour or size
+        // check if activity has returned from colour or size or load
         if (requestCode == ACTIVITY_COLOUR_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bundle bundle = data.getExtras();
@@ -157,6 +158,10 @@ public class PaintingActivity extends AppCompatActivity {
                     myFingerPainterView.setBrush(Paint.Cap.ROUND);
                 }
             }
+        } else if (requestCode == ACTIVITY_LOAD_REQUEST_CODE){
+            if (resultCode == RESULT_OK){
+                myFingerPainterView.load(getIntent().getData());
+            }
         }
     }
 
@@ -173,6 +178,11 @@ public class PaintingActivity extends AppCompatActivity {
         intentColourActivity.putExtras(colourOut);
         startActivityForResult(intentColourActivity, ACTIVITY_COLOUR_REQUEST_CODE);
 
+    }
+
+    protected void onLoadClicked(View v){
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, ACTIVITY_LOAD_REQUEST_CODE);
     }
 
 
