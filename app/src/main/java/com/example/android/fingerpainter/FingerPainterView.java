@@ -110,6 +110,7 @@ public class FingerPainterView extends View {
 
     public void load(Uri uri) {
         this.uri = uri;
+        System.out.println(uri);
     }
 
     @Override

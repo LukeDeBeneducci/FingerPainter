@@ -2,6 +2,8 @@ package com.example.android.fingerpainter;
 
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -43,6 +45,7 @@ public class PaintingActivity extends AppCompatActivity {
         brushColour = myFingerPainterView.getColour();
 
         // intercept the implicit intent to open fingerpainter app
+        System.out.println("onCreate!");
         myFingerPainterView.load(getIntent().getData());
 
     }
@@ -160,7 +163,10 @@ public class PaintingActivity extends AppCompatActivity {
             }
         } else if (requestCode == ACTIVITY_LOAD_REQUEST_CODE){
             if (resultCode == RESULT_OK){
-                myFingerPainterView.load(getIntent().getData());
+                Uri selectedImage = data.getData();
+                System.out.println("Loaded");
+                myFingerPainterView.load(selectedImage);
+
             }
         }
     }
@@ -181,8 +187,12 @@ public class PaintingActivity extends AppCompatActivity {
     }
 
     protected void onLoadClicked(View v){
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, ACTIVITY_LOAD_REQUEST_CODE);
+//        Intent loadImage = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(loadImage, ACTIVITY_LOAD_REQUEST_CODE);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), ACTIVITY_LOAD_REQUEST_CODE);
     }
 
 
